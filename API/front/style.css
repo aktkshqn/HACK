@@ -26,6 +26,7 @@
     background-color: rgb(20, 195, 0);
     padding: 0px 20px 30px 20px;
     cursor: pointer;
+    z-index: 1000;
 }
 
 .stop {
@@ -133,7 +134,7 @@
     left: 35%;
     width: 300px;
     height: 300px;
-    font-size: 200px;
+    font-size: 50px;
     background-color: gray;
     padding: 0px 20px 30px 20px;
     cursor: pointer;
@@ -145,7 +146,7 @@
     left: 35%;
     width: 300px;
     height: 300px;
-    font-size: 200px;
+    font-size: 50px;
     background-color: gray;
     padding: 0px 20px 30px 20px;
     cursor: pointer;
@@ -157,7 +158,7 @@
     left: 35%;
     width: 300px;
     height: 300px;
-    font-size: 200px;
+    font-size: 50px;
     background-color: gray;
     padding: 0px 20px 30px 20px;
     cursor: pointer;
