@@ -1,13 +1,8 @@
-// Google Fit APIのエンドポイント
 const GOOGLE_FIT_URL = 'https://www.googleapis.com/fitness/v1/users/me/dataset:aggregate';
-// ※ 実際はOAuthで取得したアクセストークンをここに入れる
 const ACCESS_TOKEN = 'YOUR_ACCESS_TOKEN';
 
 /**
  * Google Fitから消費カロリーを取得する関数
- * @param {number} start - 開始時刻(ミリ秒)
- * @param {number} end - 終了時刻(ミリ秒)
- * @returns {Promise<number>} - 消費カロリー値
  */
 export async function fetchCalories(start, end) {
     const requestBody = {
@@ -29,6 +24,7 @@ export async function fetchCalories(start, end) {
     if (!response.ok) throw new Error("Fit API通信エラー");
 
     const data = await response.json();
-    // データの階層を辿ってカロリー値（fpVal）を抽出
+    // データがない場合は0を返す安全対策
+    if (!data.bucket[0].dataset[0].point[0]) return 0;
     return data.bucket[0].dataset[0].point[0].value[0].fpVal;
 }
