@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Google Fit カロリー計測</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="card">
+        <h2>🔥 カロリー計測</h2>
+
+        <button id="auth_btn">1. Googleログイン</button>
+        <hr>
+        <button id="start_btn" disabled>2. 計測スタート</button>
+        <button id="stop_btn" disabled>3. ストップして集計</button>
+
+        <div id="status">ログインしてください</div>
+        <div id="result">結果がここに表示されます</div>
+    </div>
+
+    <script src="node.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</body>
+
+</html>

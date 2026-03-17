@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h2>Google Fit 接続テスト (デバッグ版)</h2>
+
+    <button id="auth_btn">1. ログイン（ここを押す）</button>
+    <div id="debug_log"
+        style="background:#eee; padding:10px; margin-top:20px; font-family:monospace; white-space:pre-wrap;">
+        ここにログが表示されます...
+    </div>
+
+    <script>
+        const CLIENT_ID = '794739380289-adumfdup62nm7qtt5dhih8s0p52dcae1.apps.googleusercontent.com'; // ここを書き換える
+        const SCOPES = 'https://www.googleapis.com/auth/fitness.activity.read';
+
+        function log(msg) {
+            console.log(msg);
+            document.getElementById('debug_log').innerText += "\n> " + msg;
+        }
+
+        let tokenClient;
+
+        // ページ読み込み時に初期化
+        window.onload = () => {
+            log("ページが読み込まれました");
+
+            if (typeof google === 'undefined') {
+                log("エラー: Googleのライブラリが読み込まれていません。");
+            } else {
+                log("Googleライブラリ読み込み完了。初期化します...");
+                try {
+                    tokenClient = google.accounts.oauth2.initTokenClient({
+                        client_id: CLIENT_ID,
+                        scope: SCOPES,
+                        callback: (resp) => {
+                            log("トークンを受け取りました！");
+                            console.log(resp);
+                        },
+                    });
+                    log("初期化成功。ログインボタンを押してください。");
+                } catch (e) {
+                    log("初期化エラー: " + e.message);
+                }
+            }
+        };
+
+        document.getElementById('auth_btn').onclick = () => {
+            log("ボタンがクリックされました");
+            if (tokenClient) {
+                log("ポップアップを表示します...");
+                tokenClient.requestAccessToken();
+            } else {
+                log("エラー: tokenClientが準備できていません");
+            }
+        };
+    </script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</body>
+
+</html>
