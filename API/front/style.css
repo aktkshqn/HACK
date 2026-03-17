@@ -1,0 +1,165 @@
+.circle {
+    border-radius: 100%;
+}
+
+.ellipse {
+    width: 500px;
+    height: 150px;
+    background-color: gray;
+}
+
+.header {
+    position: relative;
+}
+
+.playcolor {
+    color: rgb(0, 166, 0);
+}
+
+.start {
+    position: absolute;
+    top: 750%;
+    left: 35%;
+    width: 300px;
+    height: 300px;
+    font-size: 200px;
+    background-color: rgb(20, 195, 0);
+    padding: 0px 20px 30px 20px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.stop {
+    position: absolute;
+    top: 750%;
+    left: 15%;
+    width: 300px;
+    height: 300px;
+    font-size: 200px;
+    background-color: gray;
+    padding: 0px 20px 30px 20px;
+    cursor: pointer;
+}
+
+.stop-A {
+    position: absolute;
+    top: 15%;
+    left: 20%;
+    width: 60px;
+    height: 200px;
+    font-size: 200px;
+    background-color: rgb(82, 82, 82);
+    padding: 0px 0px 0px 0px;
+    z-index: 100;
+}
+
+.stop-B {
+    position: absolute;
+    top: 15%;
+    left: 60%;
+    width: 60px;
+    height: 200px;
+    font-size: 200px;
+    background-color: rgb(82, 82, 82);
+    padding: 0px 0px 0px 0px;
+
+}
+
+.rectangle-timer {
+    position: absolute;
+    top: 400%;
+    left: 30%;
+    width: 400px;
+    height: 100px;
+    background-color: black;
+    color: white;
+    font-size: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rectangle-kcal {
+    position: absolute;
+    top: 300%;
+    left: 20%;
+    width: 600px;
+    height: 100px;
+    background-color: gray;
+    color: black;
+    font-size: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rectangle-kcalB {
+    position: absolute;
+    top: 200%;
+    left: 20%;
+    width: 600px;
+    height: 100px;
+    background-color: gray;
+    color: black;
+    font-size: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.end {
+    position: absolute;
+    top: 750%;
+    left: 55%;
+    width: 300px;
+    height: 300px;
+    font-size: 400px;
+    background-color: rgb(195, 0, 0);
+    padding: 0px 0px 0px 0px;
+    cursor: pointer;
+}
+
+.endsquare {
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    width: 180px;
+    height: 180px;
+    background-color: rgb(123, 0, 0);
+}
+
+.patternA {
+    position: absolute;
+    top: 300%;
+    left: 35%;
+    width: 300px;
+    height: 300px;
+    font-size: 50px;
+    background-color: gray;
+    padding: 0px 20px 30px 20px;
+    cursor: pointer;
+}
+
+.patternB {
+    position: absolute;
+    top: 900%;
+    left: 35%;
+    width: 300px;
+    height: 300px;
+    font-size: 50px;
+    background-color: gray;
+    padding: 0px 20px 30px 20px;
+    cursor: pointer;
+}
+
+.patternC {
+    position: absolute;
+    top: 600%;
+    left: 35%;
+    width: 300px;
+    height: 300px;
+    font-size: 50px;
+    background-color: gray;
+    padding: 0px 20px 30px 20px;
+    cursor: pointer;
+}
