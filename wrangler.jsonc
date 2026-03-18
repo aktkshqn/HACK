@@ -2,13 +2,26 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "hack",
   "main": "src/index.ts",
-  "compatibility_date": "2026-03-14"
+  "compatibility_date": "2026-03-14",
+  "vars": {
+    "GOOGLE_FIT_CLIENT_ID": "your-google-fit-client-id",
+    "GOOGLE_FIT_CLIENT_SECRET": "your-google-fit-client-secret",
+    "GOOGLE_FIT_REDIRECT_URI": "https://your-domain.com/google-fit/callback",
+    "API_KEY": "gemini_api"
+  },
+  "d1_databases": [
+    {
+      "binding": "D1_DB",
+      "database_name": "your-d1-database-name",
+      "database_id": ""
+    }
+  ],
+  "site": {
+    "bucket": "./front"
+  },
   // "compatibility_flags": [
   //   "nodejs_compat"
   // ],
-  // "vars": {
-  //   "MY_VAR": "my-variable"
-  // },
   // "kv_namespaces": [
   //   {
   //     "binding": "MY_KV_NAMESPACE",

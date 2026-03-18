@@ -1,4 +1,4 @@
-import { fetchCalories } from './fit-api.js';
+import { fetchCalories, saveExerciseRecord } from './fit-api.js';
 import { getSnackRecommendation } from './gem-api.js';
 
 console.log("main.js loaded!"); // 確認用ログ
@@ -77,12 +77,16 @@ if (endBtn) {
             if (caloriesDisplay) caloriesDisplay.textContent = "最終結果を取得中...";
             const finalCalories = await fetchCalories(startTimeMillis, Date.now());
             
-            // 結果を保存して移動
+            // 1. D1データベースに保存
+            const userId = 'test_user'; // デモ用。必要に応じて変更
+            await saveExerciseRecord(userId, finalCalories, startTimeMillis, Date.now());
+
+            // 2. 結果を保存して移動
             localStorage.setItem('finalCalories', finalCalories);
             window.location.href = 'endmenu.html';
         } catch (error) {
-            console.error(error);
-            if (caloriesDisplay) caloriesDisplay.textContent = "エラーが発生しました";
+            console.error("保存＋遷移エラー:", error);
+            if (caloriesDisplay) caloriesDisplay.textContent = "保存中にエラーが発生しました";
         }
     });
 }
