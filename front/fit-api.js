@@ -1,19 +1,32 @@
-const GOOGLE_FIT_URL = 'https://www.googleapis.com/fitness/v1/users/me/dataset:aggregate';
-const ACCESS_TOKEN = 'YOUR_ACCESS_TOKEN';
-
 /**
- * Google Fitから消費カロリーを取得する関数
- * （現在はテスト用のダミーデータを返します）
+ * Google Fitから消費カロリーを取得する関数（バックエンド経由）
  */
 export async function fetchCalories(start, end) {
-    const elapsedSeconds = (end - start) / 1000;
-    
-    // 待機画面などの場合はダミー初期値を返す
-    if (elapsedSeconds > 3600) {
-        return 450.0 + (Math.random() * 2); 
-    }
+    const userId = localStorage.getItem('userId') || 'test_user';
+    const params = new URLSearchParams({
+        user_id: userId,
+        startTimeMillis: start.toString(),
+        endTimeMillis: end.toString()
+    });
 
-    // 計測中：1秒あたり 0.15kcal 消費と仮定
+    try {
+        const response = await fetch(`/api/google-fit/calories?${params}`);
+        if (!response.ok) {
+            // ログインしていない場合やエラーの場合はダミーへ（開発・テスト用）
+            console.warn("Real Fit API failed, falling back to dummy.");
+            return getDummyCalories(start, end);
+        }
+        const data = await response.json();
+        return data.calories || 0;
+    } catch (err) {
+        console.error("Fit API fetch error:", err);
+        return getDummyCalories(start, end);
+    }
+}
+
+function getDummyCalories(start, end) {
+    const elapsedSeconds = (end - start) / 1000;
+    if (elapsedSeconds > 3600) return 450.0 + (Math.random() * 2);
     return elapsedSeconds * 0.15;
 }
 

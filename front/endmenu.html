@@ -7,13 +7,25 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="header">
-        <div class="circle ellipse"></div>
-        <div class="rectangle-kcalB">結果0kcal消費！</div>
-        <button class="patternA" id="snack1"></button>
-        <button class="patternB" id="snack2"></button>
-        <button class="patternC" id="snack3"></button>
-    </header>
+    <div class="background-decor"></div>
+    <div class="container">
+        <a href="#" id="logoutBtn" class="logout-btn">LOGOUT</a>
+        <div class="status-area">
+            <div class="status-card-kcal">
+                <div class="rectangle-kcalB">結果0kcal消費！</div>
+            </div>
+            
+            <p style="text-align: center; color: black; font-weight: 800; margin-bottom: 1rem; text-transform: uppercase;">
+                Gifts for you
+            </p>
+
+            <div class="snack-container">
+                <button class="snack-btn" id="snack1">取得中...</button>
+                <button class="snack-btn" id="snack2">取得中...</button>
+                <button class="snack-btn" id="snack3">取得中...</button>
+            </div>
+        </div>
+    </div>
     <script type="module" src="main.js"></script>
 </body>
 </html>

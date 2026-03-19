@@ -1,165 +1,154 @@
-.circle {
-    border-radius: 100%;
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Roboto+Mono:wght@700&display=swap');
+
+:root {
+  --bg-color: #ffffff;
+  --primary: #86efac;    /* パステルグリーン (開始/再開) */
+  --info: #bae6fd;       /* パステルブルー (一時停止) */
+  --danger: #fca5a5;     /* パステルコーラル (終了) */
+  --text-main: #334155;
+  --text-dark: #1e293b;
+  --radius-circle: 50%;
 }
 
-.ellipse {
-    width: 500px;
-    height: 150px;
-    background-color: gray;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.header {
-    position: relative;
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.playcolor {
-    color: rgb(0, 166, 0);
+.container {
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.start {
-    position: absolute;
-    top: 750%;
-    left: 35%;
-    width: 300px;
-    height: 300px;
-    font-size: 200px;
-    background-color: rgb(20, 195, 0);
-    padding: 0px 20px 30px 20px;
-    cursor: pointer;
-    z-index: 1000;
+/* 統合コントロール・サークル (今回の主役) */
+.unified-circle {
+  width: 320px;
+  height: 320px;
+  border-radius: var(--radius-circle);
+  background-color: white;
+  border: 4px solid var(--primary); /* デフォルトはグリーン */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  text-align: center;
+  user-select: none;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
 }
 
-.stop {
-    position: absolute;
-    top: 750%;
-    left: 15%;
-    width: 300px;
-    height: 300px;
-    font-size: 200px;
-    background-color: gray;
-    padding: 0px 20px 30px 20px;
-    cursor: pointer;
+/* カロリー表示 (ボタンの中心) */
+.circle-kcal-value {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1;
+  margin-top: 10px;
 }
 
-.stop-A {
-    position: absolute;
-    top: 15%;
-    left: 20%;
-    width: 60px;
-    height: 200px;
-    font-size: 200px;
-    background-color: rgb(82, 82, 82);
-    padding: 0px 0px 0px 0px;
-    z-index: 100;
+.circle-unit {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-main);
 }
 
-.stop-B {
-    position: absolute;
-    top: 15%;
-    left: 60%;
-    width: 60px;
-    height: 200px;
-    font-size: 200px;
-    background-color: rgb(82, 82, 82);
-    padding: 0px 0px 0px 0px;
-
+.circle-action-label {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
-.rectangle-timer {
-    position: absolute;
-    top: 400%;
-    left: 30%;
-    width: 400px;
-    height: 100px;
-    background-color: black;
-    color: white;
-    font-size: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* ステータス別のスタイル */
+.unified-circle.is-paused {
+  border-color: var(--info);
+  background-color: #f0f9ff;
 }
 
-.rectangle-kcal {
-    position: absolute;
-    top: 300%;
-    left: 20%;
-    width: 600px;
-    height: 100px;
-    background-color: gray;
-    color: black;
-    font-size: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.unified-circle.is-paused .circle-kcal-value {
+  opacity: 0.5;
 }
 
-.rectangle-kcalB {
-    position: absolute;
-    top: 200%;
-    left: 20%;
-    width: 600px;
-    height: 100px;
-    background-color: gray;
-    color: black;
-    font-size: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* 長押し（終了）用のプログレスバー的な補助 */
+.long-press-hint {
+  margin-top: 2rem;
+  font-size: 0.75rem;
+  color: #cbd5e1;
+  font-weight: 600;
 }
 
-.end {
-    position: absolute;
-    top: 750%;
-    left: 55%;
-    width: 300px;
-    height: 300px;
-    font-size: 400px;
-    background-color: rgb(195, 0, 0);
-    padding: 0px 0px 0px 0px;
-    cursor: pointer;
+/* タイマーはボタンの上に控えめに配置 */
+.mini-timer {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #94a3b8;
 }
 
-.endsquare {
-    position: absolute;
-    top: 20%;
-    left: 20%;
-    width: 180px;
-    height: 180px;
-    background-color: rgb(123, 0, 0);
+/* 応援メッセージ */
+#ai-cheer {
+  width: 100%;
+  margin-top: 2.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #64748b;
+  min-height: 3rem;
+  padding: 0 1rem;
 }
 
-.patternA {
-    position: absolute;
-    top: 300%;
-    left: 35%;
-    width: 300px;
-    height: 300px;
-    font-size: 50px;
-    background-color: gray;
-    padding: 0px 20px 30px 20px;
-    cursor: pointer;
+/* 終了専用ボタン（長押しが難しい場合用・控えめな配置） */
+.btn-end-link {
+  margin-top: 3rem;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--danger);
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
 }
 
-.patternB {
-    position: absolute;
-    top: 900%;
-    left: 35%;
-    width: 300px;
-    height: 300px;
-    font-size: 50px;
-    background-color: gray;
-    padding: 0px 20px 30px 20px;
-    cursor: pointer;
+/* ログアウトボタン */
+.logout-btn {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-decoration: none;
 }
 
-.patternC {
-    position: absolute;
-    top: 600%;
-    left: 35%;
-    width: 300px;
-    height: 300px;
-    font-size: 50px;
-    background-color: gray;
-    padding: 0px 20px 30px 20px;
-    cursor: pointer;
+/* PC対応 */
+@media (min-width: 600px) {
+  body { background-color: #f8fafc; }
+  .container {
+    background-color: white;
+    box-shadow: 0 4px 60px -12px rgba(0, 0, 0, 0.08);
+    height: 800px;
+    border-radius: 40px;
+  }
 }

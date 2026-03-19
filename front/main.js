@@ -7,88 +7,154 @@ console.log("main.js loaded!"); // 確認用ログ
 const startBtn = document.getElementById('startBtn'); // startmenu.html用
 const endBtn = document.getElementById('endBtn');     // continuationmenu.html用の赤い終了ボタン
 
-// タイマーやカロリー表示用の要素（クラス名で取得）
-const statusDisplay = document.querySelector('.rectangle-timer'); 
-const caloriesDisplay = document.querySelector('.rectangle-kcal'); // continuationmenu.html用
+// タイマーやカロリー表示用の要素
+const statusDisplay = document.querySelector('.mini-timer'); 
+const caloriesDisplay = document.getElementById('current-kcal-value'); // 統合サークル内
 const resultCaloriesDisplay = document.querySelector('.rectangle-kcalB'); // endmenu.html用
+const loginBtn = document.getElementById('loginBtn'); // login.html用
+const logoutBtn = document.getElementById('logoutBtn'); // 共通
+const authStatus = document.getElementById('authStatus');
+
+// --- 0. ログイン状態の管理 ---
+// (中略 - ログインガードなどは維持)
+if (!localStorage.getItem('isLoggedIn') && !window.location.pathname.endsWith('login.html') && !window.location.pathname.endsWith('callback.html')) {
+    window.location.href = '/login.html';
+}
+
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const userId = localStorage.getItem('userId') || 'test_user';
+        try {
+            await fetch('/api/google-fit/logout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_id: userId })
+            });
+        } catch (err) { console.warn("Logout request failed, continuing local logout."); }
+        localStorage.clear();
+        window.location.href = '/login.html';
+    });
+}
+
+if (loginBtn) {
+    loginBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        try {
+            const res = await fetch('/api/google-fit/auth-url');
+            const data = await res.json();
+            if (data.authorizationUrl) {
+                localStorage.setItem('userId', 'test_user');
+                window.location.href = data.authorizationUrl;
+            }
+        } catch (err) { console.error("ログインURL取得エラー", err); }
+    });
+}
 
 let startTimeMillis = localStorage.getItem('startTimeMillis') ? parseInt(localStorage.getItem('startTimeMillis')) : 0;
 let intervalId = null;
 
 // --- 1. startmenu.html の処理 ---
 if (startBtn) {
-    console.log("startBtn found, adding click listener"); // 確認用ログ
     startBtn.addEventListener('click', () => {
-        console.log("startBtn clicked!"); // 確認用ログ
-        // スタート時間を保存して次のページへ
         localStorage.setItem('startTimeMillis', Date.now());
         window.location.href = 'continuationmenu.html';
     });
 }
 
 // --- 2. continuationmenu.html の処理 ---
-if (endBtn) {
+if (window.location.pathname.endsWith('continuationmenu.html')) {
+    const stopBtn = document.getElementById('stopBtn'); // 統合サークル
+    const aiCheerDisplay = document.getElementById('ai-cheer');
+    const actionLabel = document.getElementById('action-label');
     
-    // タイマー（00:00）を更新する関数
+    let isPaused = false;
+    let cheerIntervalId = null;
+
+    const updateAiCheer = async () => {
+        if (isPaused) return; 
+        const currentKcal = localStorage.getItem('currentCalories') || '0';
+        const prompt = `あなたは熱血AIトレーナーです。ユーザーは現在運動中です。目標達成まであと少し！
+消費カロリーは現在 ${currentKcal} kcal です。
+ユーザーのモチベーションを最高に高める、熱く短い応援メッセージ（20文字以内）を送ってください。`;
+
+        try {
+            const res = await fetch('/api/gemini/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: prompt })
+            });
+            if (res.ok) {
+                const data = await res.json();
+                if (aiCheerDisplay) aiCheerDisplay.textContent = data.response;
+            }
+        } catch (err) { console.warn("Ai cheer failed", err); }
+    };
+    
+    cheerIntervalId = setInterval(updateAiCheer, 15000);
+
     const updateTimer = () => {
-        console.log("updateTimer called. startTimeMillis:", startTimeMillis, "statusDisplay:", statusDisplay);
+        if (isPaused) return;
         if (startTimeMillis > 0 && statusDisplay) {
             const elapsed = Date.now() - startTimeMillis;
             const totalSeconds = Math.floor(elapsed / 1000);
-            
             const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
             const seconds = String(totalSeconds % 60).padStart(2, '0');
-            
             statusDisplay.textContent = `${minutes}:${seconds}`;
-            console.log(`Timer updated: ${minutes}:${seconds}`);
-        } else {
-            console.log("updateTimer failed condition. startTimeMillis > 0:", startTimeMillis > 0, "statusDisplay exists:", !!statusDisplay);
         }
     };
 
-    // 初回読み込み時にすぐカロリーを更新する関数
     const updateCalories = async () => {
-        const now = Date.now();
+        if (isPaused) return;
         if (startTimeMillis > 0) {
             try {
-                const calories = await fetchCalories(startTimeMillis, now);
-                // 取得したカロリー（小数点以下2桁）をリアルタイムで反映する
-                if (caloriesDisplay) caloriesDisplay.textContent = `現在${calories.toFixed(2)}kcal消費中！`;
-            } catch (err) {
-                console.error("カロリー取得エラー", err);
-            }
+                const calories = await fetchCalories(startTimeMillis, Date.now());
+                if (caloriesDisplay) caloriesDisplay.textContent = calories.toFixed(1);
+                localStorage.setItem('currentCalories', calories.toFixed(1));
+            } catch (err) { console.error("カロリー取得エラー", err); }
         }
     };
 
-    // ページが開かれたらタイマーとカロリーをすぐ実行
     updateTimer();
     updateCalories();
     
-    // タイマーは1秒ごと、カロリーは5秒ごとに更新
     const timerIntervalId = setInterval(updateTimer, 1000);
     intervalId = setInterval(updateCalories, 5000);
 
-    // 終了（赤いボタン）が押されたら結果画面へ
-    endBtn.addEventListener('click', async () => {
-        clearInterval(timerIntervalId);
-        clearInterval(intervalId);
-        
-        try {
-            if (caloriesDisplay) caloriesDisplay.textContent = "最終結果を取得中...";
-            const finalCalories = await fetchCalories(startTimeMillis, Date.now());
-            
-            // 1. D1データベースに保存
-            const userId = 'test_user'; // デモ用。必要に応じて変更
-            await saveExerciseRecord(userId, finalCalories, startTimeMillis, Date.now());
+    if (stopBtn) {
+        stopBtn.addEventListener('click', () => {
+            if (!isPaused) {
+                isPaused = true;
+                stopBtn.classList.add('is-paused');
+                if (actionLabel) actionLabel.textContent = "TAP TO RESUME";
+                localStorage.setItem('pausedElapsed', Date.now() - startTimeMillis);
+                if (aiCheerDisplay) aiCheerDisplay.textContent = "一時停止中... 呼吸を整えましょう 🧘";
+            } else {
+                const pausedElapsed = parseInt(localStorage.getItem('pausedElapsed') || "0");
+                startTimeMillis = Date.now() - pausedElapsed;
+                localStorage.setItem('startTimeMillis', startTimeMillis);
+                isPaused = false;
+                stopBtn.classList.remove('is-paused');
+                if (actionLabel) actionLabel.textContent = "TAP TO PAUSE";
+                if (aiCheerDisplay) aiCheerDisplay.textContent = "トレーニング再開！🔥";
+            }
+        });
+    }
 
-            // 2. 結果を保存して移動
-            localStorage.setItem('finalCalories', finalCalories);
-            window.location.href = 'endmenu.html';
-        } catch (error) {
-            console.error("保存＋遷移エラー:", error);
-            if (caloriesDisplay) caloriesDisplay.textContent = "保存中にエラーが発生しました";
-        }
-    });
+    if (endBtn) {
+        endBtn.addEventListener('click', async () => {
+            clearInterval(timerIntervalId);
+            clearInterval(intervalId);
+            clearInterval(cheerIntervalId);
+            try {
+                if (caloriesDisplay) caloriesDisplay.textContent = "---";
+                const finalCalories = await fetchCalories(startTimeMillis, Date.now());
+                await saveExerciseRecord('test_user', finalCalories, startTimeMillis, Date.now());
+                localStorage.setItem('finalCalories', finalCalories.toFixed(1));
+                window.location.href = 'endmenu.html';
+            } catch (error) { console.error(error); }
+        });
+    }
 }
 
 // --- 3. endmenu.html の処理 ---

@@ -7,18 +7,20 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="header">
-        <div class="circle ellipse"></div>
-        <div class="rectangle-timer">00:00</div>
-        <div class="rectangle-kcal">現在0kcal消費中！</div>
-        <button class="stop">
-            <div class="stop-A"></div>
-            <div class="stop-B"></div>
-        </button>
-        <button class="end" id="endBtn">
-            <div class="endsquare"></div>
-        </button>
-    </header>
+    <div class="container">
+        <div class="mini-timer">00:00</div>
+
+        <div id="stopBtn" class="unified-circle">
+            <div class="circle-unit">BURNED</div>
+            <div class="circle-kcal-value" id="current-kcal-value">0.0</div>
+            <div class="circle-unit">KCAL</div>
+            <div class="circle-action-label" id="action-label">TAP TO PAUSE</div>
+        </div>
+
+        <div id="ai-cheer">AIがあなたの運動を見守っています...</div>
+
+        <button class="btn-end-link" id="endBtn">HOLD OR TAP HERE TO FINISH</button>
+    </div>
     <script type="module" src="main.js"></script>
 </body>
 </html>
