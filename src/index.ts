@@ -24,7 +24,13 @@ app.get('/api/ai', (c) => c.redirect('/api/gemini/test'))
 app.get('/api/migrate', (c) => c.redirect('/api/dev/migrate'))
 
 // --- 静的ファイルとルーティング ---
-app.use('/*', serveStatic({ root: './', manifest }))
+// ディレクトリごとに明示的に静的ファイルを配信
+app.use('/pages/*', serveStatic({ root: './', manifest }))
+app.use('/js/*', serveStatic({ root: './', manifest }))
+app.use('/css/*', serveStatic({ root: './', manifest }))
+app.use('/login.html', serveStatic({ root: './', manifest }))
+app.use('/callback.html', serveStatic({ root: './', manifest }))
+
 app.get('/', (c) => c.redirect('/login.html'))
 
 export default app

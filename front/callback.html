@@ -1,43 +1,38 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head><meta charset="UTF-8"><title>認証中...</title></head>
-<body>
-    <div style="text-align:center; padding: 50px;">
-        <h2>認証中です...</h2>
-        <p>少々お待ちください。</p>
-    </div>
-    <script>
-        async function handleCallback() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const code = urlParams.get('code');
-            const userId = localStorage.getItem('userId') || 'test_user';
+<head>
+    <meta charset="UTF-8">
+    <title>連携中...</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body style="display:flex; justify-content:center; align-items:center; height:100vh;">
+    <p style="font-weight: 800; color: #64748b;">AUTHENTICATING...</p>
+    <script type="module">
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        const userId = localStorage.getItem('userId') || 'test_user';
 
-            if (!code) {
-                alert('認証に失敗しました。');
-                window.location.href = '/';
-                return;
-            }
-
-            try {
-                const response = await fetch('/api/google-fit/token', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ user_id: userId, code: code })
-                });
-
-                if (response.ok) {
+        if (code) {
+            fetch('/api/google-fit/token', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code, user_id: userId })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
                     localStorage.setItem('isLoggedIn', 'true');
-                    window.location.href = '/startmenu.html';
+                    window.location.href = 'pages/startmenu.html';
                 } else {
-                    alert('トークンの取得に失敗しました。');
-                    window.location.href = '/';
+                    alert('認証に失敗しました。');
+                    window.location.href = 'login.html';
                 }
-            } catch (err) {
+            })
+            .catch(err => {
                 console.error(err);
-                alert('通信エラーが発生しました。');
-            }
+                window.location.href = 'login.html';
+            });
         }
-        handleCallback();
     </script>
 </body>
 </html>

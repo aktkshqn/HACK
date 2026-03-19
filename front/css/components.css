@@ -1,0 +1,54 @@
+/**
+ * コンポーネント用スタイル
+ */
+
+.unified-circle {
+  width: 320px;
+  height: 320px;
+  border-radius: var(--radius-circle);
+  background-color: white;
+  border: 6px solid var(--primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  text-align: center;
+  user-select: none;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+}
+
+.unified-circle.is-paused {
+  border-color: var(--info);
+  background-color: #f0f9ff;
+}
+
+.circle-kcal-value {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1;
+  margin: 10px 0;
+}
+
+.circle-unit { font-size: 1rem; font-weight: 600; color: var(--text-main); }
+.circle-action-label {
+  margin-top: 1rem; font-size: 0.8rem; font-weight: 800; color: #94a3b8;
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+
+.logout-btn {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  border: 1px solid var(--danger); color: var(--danger);
+  padding: 0.4rem 0.8rem; border-radius: 6px;
+  font-size: 0.75rem; font-weight: 800; text-decoration: none;
+}
+
+.btn-end-link {
+  margin-top: 3rem; font-size: 0.85rem; font-weight: 800;
+  color: var(--danger); text-decoration: underline;
+  cursor: pointer; background: none; border: none;
+}

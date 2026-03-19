@@ -1,0 +1,50 @@
+/**
+ * ページ個別スタイル
+ */
+
+/* ログイン画面専用 */
+.login-hero-btn {
+  border: 3px solid var(--text-dark);
+  border-radius: 12px;
+  padding: 1.25rem 2rem;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.login-hero-btn:hover { background: #f8fafc; transform: translateY(-2px); }
+
+/* 計測画面用 */
+.mini-timer {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #94a3b8;
+}
+
+#ai-cheer {
+  width: 100%; margin-top: 2.5rem; text-align: center;
+  font-size: 0.95rem; font-weight: 600; color: #64748b;
+  min-height: 3rem; padding: 0 1rem;
+}
+
+/* 結果画面用 */
+.status-card-kcal {
+  background-color: white; border: 2px solid var(--border-color);
+  border-radius: var(--radius-subtle); padding: 1.25rem 1rem; width: 100%;
+}
+
+.rectangle-kcalB {
+  font-size: 1.4rem; font-weight: 800; color: var(--text-dark); text-align: center;
+}
+
+.snack-container { display: flex; flex-direction: column; gap: 0.8rem; width: 100%; }
+.snack-btn {
+  background-color: white; border: 2px solid var(--border-color);
+  padding: 1.2rem; border-radius: var(--radius-subtle);
+  font-size: 0.95rem; font-weight: 600; text-align: left;
+}
