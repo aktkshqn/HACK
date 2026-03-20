@@ -26,6 +26,7 @@ app.get('/api/migrate', (c) => c.redirect('/api/dev/migrate'))
 
 // --- 静的ファイルとルーティング ---
 // ディレクトリごとに明示的に静的ファイルを配信
+app.use('/img/*', serveStatic({ root: './', manifest }))
 app.use('/pages/*', serveStatic({ root: './', manifest }))
 app.use('/js/*', serveStatic({ root: './', manifest }))
 app.use('/css/*', serveStatic({ root: './', manifest }))

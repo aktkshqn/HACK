@@ -17,22 +17,39 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // 表示モード（PC版/スマホ版）の復元と切替ボタン生成
-    const savedMode = localStorage.getItem('viewMode');
-    if (savedMode === 'desktop') document.body.classList.add('is-desktop-mode');
+    // 0.5. 背景画像のランダム切り替え (PC版左パネル用)
+    const leftPanel = document.querySelector('.left-panel') as HTMLElement | null;
+    if (leftPanel) {
+        const bgImages = [
+            '/img/dumbbell_1.jpg',
+            '/img/dumbbell_2.jpg',
+            '/img/jogging.jpg',
+            '/img/press.jpg',
+            '/img/run.jpg'
+        ];
+        
+        const updateBg = () => {
+            const randomImg = bgImages[Math.floor(Math.random() * bgImages.length)];
+            // モノトーン調を維持するため、グレースケールのオーバーレイと組み合わせる
+            leftPanel.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), grayscale(100%) url('${randomImg}')`;
+            // 注意: CSS filter ではなく、ブラウザ互換性の高い background-image の複数指定や blend-mode を利用
+            leftPanel.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${randomImg}')`;
+            // filter は CSS 側にかけてあるので、こちらでは URL の更新のみ
+        };
+        updateBg();
+        setInterval(updateBg, 6000); // 6秒おきに切り替え
+    }
 
-    if (window.innerWidth >= 900) {
-        const toggleBtn = document.createElement('button');
-        toggleBtn.id = 'viewModeToggle';
-        toggleBtn.innerHTML = document.body.classList.contains('is-desktop-mode') ? '📱 MOBILE VIEW' : '🖥️ PC VIEW';
-        toggleBtn.style.cssText = 'position:fixed; bottom:20px; right:20px; z-index:1000; padding:10px 20px; border-radius:24px; border:none; background:#1e293b; color:white; cursor:pointer; font-weight:800; font-size:0.75rem; box-shadow:0 10px 30px rgba(0,0,0,0.3);';
-        document.body.appendChild(toggleBtn);
-
-        toggleBtn.addEventListener('click', () => {
-            const isDesktop = document.body.classList.toggle('is-desktop-mode');
-            localStorage.setItem('viewMode', isDesktop ? 'desktop' : 'mobile');
-            toggleBtn.innerHTML = isDesktop ? '📱 MOBILE VIEW' : '🖥️ PC VIEW';
+    // --- モバイルメニューの開閉ロジック ---
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navMenu.classList.toggle('is-active');
         });
+        // 画面のどこかをクリックしたらメニューを閉じる
+        document.addEventListener('click', () => navMenu.classList.remove('is-active'));
     }
 
     // -- 要素の取得 --
@@ -121,28 +138,42 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 4. 結果画面 (endmenu.html) ---
     if (window.location.pathname.endsWith('endmenu.html')) {
         const finalKcal = localStorage.getItem('finalCalories') || '0';
-        if (resultCaloriesDisplay) resultCaloriesDisplay.textContent = `結果${finalKcal}kcal消費！`;
+        const finalKcalEl = document.getElementById('final-kcal');
+        const praiseEl = document.getElementById('praise-message');
+        const aiEvalEl = document.getElementById('ai-evaluation');
+
+        if (finalKcalEl) finalKcalEl.textContent = finalKcal;
         
-        const fetchSnacks = async () => {
+        const fetchGohans = async () => {
             try {
                 const res = await fetch('/api/gemini/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: `${finalKcal}kcal消費しました。このカロリー分で食べられるコンビニのお菓子を3つ、具体的な商品名とリンクを含めてJSONで教えてください。` })
+                    body: JSON.stringify({ message: `${finalKcal}kcal消費しました。Gohan-Fit コンシェルジュとして賞賛と、最高のご褒美レストランを3つ提案してください。` })
                 });
                 const data: CheerResponse = await res.json();
+                
+                if (praiseEl) praiseEl.textContent = data.message;
+                
                 if (data.items) {
                     data.items.forEach((item, i) => {
                         const btn = document.getElementById(`snack${i+1}`);
                         if (btn) {
-                            btn.innerHTML = `<strong>${item.name}</strong><br><small>${item.info}</small><br><span style="font-size:0.7rem; color:blue;">近くの店舗で探す ➹</span>`;
+                            btn.innerHTML = `
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                                    <strong style="font-size: 1.1rem; color: var(--text-main);">${item.name}</strong>
+                                    <span style="font-size: 0.7rem; background: var(--border-color, #e2e8f0); padding: 2px 8px; border-radius: 10px;">REWARD ${i+1}</span>
+                                </div>
+                                <div style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.5rem;">${item.info}</div>
+                                <div style="text-align: right; font-size: 0.8rem; font-weight: 800; color: var(--primary);">詳しくみる ↗</div>
+                            `;
                             btn.onclick = () => window.open(item.link, '_blank');
                         }
                     });
                 }
             } catch (err) { console.error(err); }
         };
-        fetchSnacks();
+        fetchGohans();
     }
 
     // --- 5. 過去ログ画面 (history.html) ---

@@ -7,27 +7,41 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <div class="container" style="justify-content: flex-start;">
-        <header class="app-header">
-            <div style="width: 60px;"></div> <!-- Spacer -->
-            <span style="font-weight: 800; font-size: 1.2rem;">WORKOUT</span>
-            <a href="history.html" class="nav-link">LOGS</a>
-        </header>
+    <div class="app-wrapper">
+        <!-- 左側エリア -->
+        <aside class="left-panel">
+            <h1 class="key-message">美味しいひとときのために、<br>今は一歩ずつ。</h1>
+        </aside>
 
-        <div style="margin-top: 4rem; text-align: center;">
-            <div class="mini-timer" style="font-size: 2.2rem; margin-bottom: 2rem;">00:00</div>
-            
-            <div id="stopBtn" class="unified-circle" style="margin: 0 auto;">
-                <div class="circle-unit">BURNED</div>
-                <div class="circle-kcal-value" id="current-kcal-value">0.0</div>
-                <div class="circle-unit">KCAL</div>
-                <div class="circle-action-label" id="action-label">Tap to Pause</div>
-            </div>
+        <!-- 右側エリア -->
+        <main class="right-panel">
+            <header class="app-header" style="position: absolute; top: 0; left: 0; right: 0; border: none; background: transparent; padding: 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 100;">
+                <span style="font-weight: 800; font-size: 1.4rem; color: var(--primary);">Gohan-Fit</span>
+                <div class="nav-links-container" id="navMenu">
+                    <a href="history.html" class="nav-link">履歴</a>
+                    <a href="#" id="logoutBtn" class="nav-link" style="color: var(--accent);">ログアウト</a>
+                </div>
+                <button class="menu-toggle" id="menuToggle">☰</button>
+            </header>
 
-            <div id="ai-cheer" style="margin-top: 4rem; font-weight: 700; color: #64748b; line-height: 1.6;">
-                運動を始めましょう！🏃‍♂️
+            <div class="gohan-card is-recording" id="recordingCard" style="border-color: var(--primary);">
+                <div style="margin-bottom: 2rem;">
+                    <div style="font-size: 0.9rem; font-weight: 800; color: var(--primary); margin-bottom: 1rem; letter-spacing: 0.1em;">RECORDING...</div>
+                    <div class="mini-timer" id="timer" style="font-size: 3rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem; font-family: 'Roboto Mono', monospace;">00:00</div>
+                    <div style="font-size: 1.2rem; color: var(--text-muted);">
+                        <span id="current-kcal-value" style="font-weight: 800; color: var(--text-main); font-size: 2rem;">0.0</span> kcal
+                    </div>
+                </div>
+
+                <div id="ai-cheer" style="margin-bottom: 2rem; min-height: 20px; font-weight: 600; font-size: 0.9rem; color: var(--primary);">
+                    頑張っていますね！その調子です。
+                </div>
+
+                <button id="stopBtn" class="btn-gohan" style="width: 100%; padding: 1.2rem; border-radius: 50px;">
+                    一時停止
+                </button>
             </div>
-        </div>
+        </main>
     </div>
     <script type="module" src="/js/app.js"></script>
 </body>

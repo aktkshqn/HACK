@@ -7,29 +7,49 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <div class="container" style="justify-content: flex-start;">
-        <header class="app-header">
-            <a href="#" id="logoutBtn" class="nav-link">LOGOUT</a>
-            <span style="font-weight: 800; font-size: 1.2rem;">RESULT</span>
-            <a href="history.html" class="nav-link">LOGS</a>
-        </header>
+    <div class="app-wrapper">
+        <!-- 左側エリア -->
+        <aside class="left-panel">
+            <h1 class="key-message">お疲れ様でした！<br>努力を、美味しさへ。</h1>
+        </aside>
 
-        <main style="width: 100%; padding: 1.5rem; text-align: center;">
-            <div style="margin-top: 1rem; margin-bottom: 2rem;">
-                <div class="status-card-timer" style="background-color: var(--primary); padding: 1.5rem; border-radius: 24px;">
-                    <h2 class="rectangle-kcalB" style="color: white; font-size: 1.4rem;">取得中...</h2>
+        <!-- 右側エリア -->
+        <main class="right-panel">
+            <header class="app-header" style="position: absolute; top: 0; left: 0; right: 0; border: none; background: transparent; padding: 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 100;">
+                <span style="font-weight: 800; font-size: 1.4rem; color: var(--success);">Gohan-Fit</span>
+                <div class="nav-links-container" id="navMenu">
+                    <a href="history.html" class="nav-link">履歴</a>
+                    <a href="#" id="logoutBtn" class="nav-link" style="color: var(--accent);">ログアウト</a>
+                </div>
+                <button class="menu-toggle" id="menuToggle">☰</button>
+            </header>
+
+            <div class="gohan-card" style="border-color: var(--success); margin-bottom: 2rem;">
+                <div style="margin-bottom: 1rem;">
+                    <div style="font-size: 3rem;">🏅</div>
+                    <h2 style="font-size: 1.5rem; color: var(--success); font-weight: 800; margin-bottom: 0.5rem;" id="praise-message">WELL DONE!</h2>
+                    <p style="color: var(--text-muted);">
+                        あなたは今日 <span id="final-kcal" style="font-weight: 800; color: var(--text-main); font-size: 1.8rem;">---</span> kcal 消費しました！
+                    </p>
                 </div>
             </div>
 
-            <h3 style="font-size: 1rem; color: #64748b; margin-bottom: 1rem; font-weight: 800;">GIFTS FOR YOU</h3>
-            <div style="display: flex; flex-direction: column; gap: 1rem;">
-                <button id="snack1" class="summary-card" style="border-width: 2px; width: 100%; text-align: left;"></button>
-                <button id="snack2" class="summary-card" style="border-width: 2px; width: 100%; text-align: left;"></button>
-                <button id="snack3" class="summary-card" style="border-width: 2px; width: 100%; text-align: left;"></button>
+            <div style="width: 100%; max-width: 500px;">
+                <h3 style="font-size: 1rem; color: var(--text-muted); margin-bottom: 1.2rem; text-align: center; font-weight: 800;">🎁 SPECIAL REWARDS</h3>
+                <div id="snack-container" style="display: flex; flex-direction: column; gap: 1rem;">
+                    <!-- 3枚の店舗カードがここに入る -->
+                    <button id="snack1" class="gohan-card reveal-card" style="padding: 1.2rem; border-width: 2px; text-align: left; max-width: none; border-color: #60a5fa;"></button>
+                    <button id="snack2" class="gohan-card reveal-card" style="padding: 1.2rem; border-width: 2px; text-align: left; max-width: none; border-color: #34d399;"></button>
+                    <button id="snack3" class="gohan-card reveal-card" style="padding: 1.2rem; border-width: 2px; text-align: left; max-width: none; border-color: #f472b6;"></button>
+                </div>
+
+                <div id="ai-evaluation" style="margin-top: 1.5rem; text-align: center; font-size: 0.85rem; color: var(--text-muted); font-style: italic; line-height: 1.6; padding: 0 1rem;">
+                    あなたの頑張りにぴったりのご褒美を選びました。
+                </div>
             </div>
 
-            <div style="margin-top: 3rem;">
-                <a href="startmenu.html" class="nav-link" style="background-color: var(--primary); color: white; padding: 1rem 3rem; display: inline-block;">RESTART</a>
+            <div style="margin-top: 2rem;">
+                <a href="startmenu.html" class="btn-gohan" style="text-decoration: none; display: inline-block;">次の運動へ</a>
             </div>
         </main>
     </div>

@@ -1,51 +1,49 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "hack",
-  "main": "src/index.ts",
-  "compatibility_date": "2026-03-14",
-  "vars": {
-    "GOOGLE_FIT_CLIENT_ID": "your-google-fit-client-id",
-    "GOOGLE_FIT_CLIENT_SECRET": "your-google-fit-client-secret",
-    "GOOGLE_FIT_REDIRECT_URI": "https://your-domain.com/google-fit/callback",
-    "API_KEY": "gemini_api"
-  },
-  "d1_databases": [
-    {
-      "binding": "D1_DB",
-      "database_name": "your-d1-database-name",
-      "database_id": ""
-    }
-  ],
-  "site": {
-    "bucket": "./front"
-  },
-  // "compatibility_flags": [
-  //   "nodejs_compat"
-  // ],
-  // "kv_namespaces": [
-  //   {
-  //     "binding": "MY_KV_NAMESPACE",
-  //     "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-  //   }
-  // ],
-  // "r2_buckets": [
-  //   {
-  //     "binding": "MY_BUCKET",
-  //     "bucket_name": "my-bucket"
-  //   }
-  // ],
-  // "d1_databases": [
-  //   {
-  //     "binding": "MY_DB",
-  //     "database_name": "my-database",
-  //     "database_id": ""
-  //   }
-  // ],
-  // "ai": {
-  //   "binding": "AI"
-  // },
-  // "observability": {
-  //   "enabled": true,
-  //   "head_sampling_rate": 1
-  // }
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "hack",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-03-14",
+	"vars": {
+		"GOOGLE_FIT_CLIENT_ID": "792514723572-ljqe20q38jorqb14cb5jhga96u5klr0n.apps.googleusercontent.com",
+		"GOOGLE_FIT_REDIRECT_URI": "https://hack.gohan-fit.workers.dev/callback.html"
+	},
+	"d1_databases": [
+		{
+			"binding": "D1_DB",
+			"database_name": "your-d1-database-name",
+			"database_id": "acf9cab2-21d3-4dca-84d9-1939afabb418"
+		}
+	],
+	"site": {
+		"bucket": "./front"
+	},
+	// "compatibility_flags": [
+	//   "nodejs_compat"
+	// ],
+	// "kv_namespaces": [
+	//   {
+	//     "binding": "MY_KV_NAMESPACE",
+	//     "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+	//   }
+	// ],
+	// "r2_buckets": [
+	//   {
+	//     "binding": "MY_BUCKET",
+	//     "bucket_name": "my-bucket"
+	//   }
+	// ],
+	// "d1_databases": [
+	//   {
+	//     "binding": "MY_DB",
+	//     "database_name": "my-database",
+	//     "database_id": ""
+	//   }
+	// ],
+	// "ai": {
+	//   "binding": "AI"
+	// },
+	// "observability": {
+	//   "enabled": true,
+	//   "head_sampling_rate": 1
+	// }
 }
