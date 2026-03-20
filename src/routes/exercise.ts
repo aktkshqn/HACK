@@ -11,6 +11,29 @@ exercise.get('', async (c) => {
   return c.json({ records: results || [] })
 })
 
+// 過去ログ（累計）の取得
+exercise.get('/summary', async (c) => {
+  const userId = c.req.query('user_id') || 'test_user';
+  try {
+    // 今日の合計
+    const today = await c.env.D1_DB.prepare(
+      "SELECT SUM(calories_burned) as total FROM exercise_records WHERE user_id = ? AND date(start_time) = date('now', 'localtime')"
+    ).bind(userId).first() as { total: number | null };
+
+    // 今週の合計 (7日前から現在まで)
+    const weekly = await c.env.D1_DB.prepare(
+      "SELECT SUM(calories_burned) as total FROM exercise_records WHERE user_id = ? AND date(start_time) >= date('now', 'localtime', '-7 days')"
+    ).bind(userId).first() as { total: number | null };
+
+    return c.json({
+      today_total: today.total || 0,
+      weekly_total: weekly.total || 0
+    });
+  } catch (err) {
+    return c.json({ error: 'Failed to fetch summary', detail: String(err) }, 500);
+  }
+})
+
 // 運動記録の保存
 exercise.post('', async (c) => {
   const body = await c.req.json().catch(() => ({}))

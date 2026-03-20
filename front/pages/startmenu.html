@@ -3,16 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>スタートメニュー</title>
+    <title>FitSweets</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <div class="container">
-        <a href="#" id="logoutBtn" class="logout-btn">LOGOUT</a>
-        <div id="startBtn" class="unified-circle" style="border-width: 6px;">
-            <div class="circle-unit" style="font-size: 1.2rem; color: var(--primary);">LET'S GO</div>
-            <div class="circle-kcal-value">GO!</div>
-            <div class="circle-action-label">Tap to Start</div>
+    <div class="container" style="justify-content: flex-start;">
+        <header class="app-header">
+            <span style="font-weight: 800; font-size: 1.4rem; color: var(--primary);">FitSweets</span>
+            
+            <nav class="desktop-nav">
+                <a href="overview.html" class="nav-link">概要</a>
+                <a href="contact.html" class="nav-link">問い合わせ</a>
+                <a href="history.html" class="nav-link">過去ログ</a>
+                <a href="#" id="logoutBtn" class="nav-link" style="color: var(--danger);">ログアウト</a>
+            </nav>
+
+            <div style="display: flex; gap: 1rem;" class="mobile-only">
+                <a href="history.html" class="nav-link">LOGS</a>
+                <a href="#" id="logoutBtn" class="nav-link" style="color: var(--danger);">OUT</a>
+            </div>
+        </header>
+
+        <div style="margin-top: 6rem;">
+            <div id="startBtn" class="unified-circle" style="border-width: 6px;">
+                <div class="circle-unit" style="font-size: 1.2rem; color: var(--primary);">LET'S GO</div>
+                <div class="circle-kcal-value">GO!</div>
+                <div class="circle-action-label">Tap to Start</div>
+            </div>
         </div>
     </div>
     <script type="module" src="/js/app.js"></script>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Settings - FitSweets</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .dev-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.8rem; }
+        .dev-table th, .dev-table td { border: 1px solid #e2e8f0; padding: 0.5rem; text-align: left; }
+        .dev-table th { background-color: #f8fafc; }
+        .btn-del { background: #fca5a5; border: none; padding: 0.2rem 0.5rem; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body class="dev-page">
+    <div class="container" style="justify-content: flex-start; max-width: 800px; height: auto; min-height: 100dvh;">
+        <header class="app-header">
+            <a href="startmenu.html" class="nav-link">← APP</a>
+            <span style="font-weight: 800; font-size: 1.2rem;">DEV TOOLS</span>
+            <button id="clearAllBtn" class="nav-link" style="background-color: #fca5a5; color: #7f1d1d; border: none;">CLEAR ALL</button>
+        </header>
+
+        <main style="width: 100%; padding: 1rem;">
+            <h3>Exercise Records Table</h3>
+            <div style="overflow-x: auto;">
+                <table class="dev-table" id="db-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>User</th>
+                            <th>Kcal</th>
+                            <th>Start</th>
+                            <th>Dur(min)</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="db-body">
+                        <tr><td colspan="6" style="text-align: center;">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="/js/app.js"></script>
+</body>
+</html>

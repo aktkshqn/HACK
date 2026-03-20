@@ -17,16 +17,23 @@ dev.get('/migrate', async (c) => {
   return c.text('Migration completed')
 })
 
-// 利用可能なモデルの一覧表示
-dev.get('/list-models', async (c) => {
-  if (!c.env.API_KEY) return c.text('API_KEY not set', 500)
-  try {
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${c.env.API_KEY}`)
-    const data = await res.json()
-    return c.json(data)
-  } catch (error) {
-    return c.text(`Error listing models: ${String(error)}`, 500)
-  }
-})
+// データベースの内容を確認（全レコード取得）
+dev.get('/all', async (c) => {
+  const { results } = await c.env.D1_DB.prepare("SELECT * FROM exercise_records ORDER BY id DESC").all();
+  return c.json({ records: results || [] });
+});
+
+// 特定のレコードを削除
+dev.delete('/record/:id', async (c) => {
+  const id = c.req.param('id');
+  await c.env.D1_DB.prepare("DELETE FROM exercise_records WHERE id = ?").bind(id).run();
+  return c.json({ success: true });
+});
+
+// 全運動データをリセット
+dev.delete('/clear', async (c) => {
+  await c.env.D1_DB.prepare("DELETE FROM exercise_records").run();
+  return c.json({ success: true });
+});
 
 export default dev

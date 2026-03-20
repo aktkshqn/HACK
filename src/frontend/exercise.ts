@@ -27,7 +27,7 @@ export const Exercise = {
             activity_type: 'walking',
             start_time: new Date(start).toISOString(),
             end_time: new Date(end).toISOString(),
-            calories: calories
+            calories_burned: calories
         };
         try {
             const res = await fetch('/api/exercise-records', {
@@ -40,5 +40,30 @@ export const Exercise = {
             console.error("記録保存エラー:", error);
             return false;
         }
+    },
+
+    // 累計データの取得 (今日と今週)
+    async getSummary(): Promise<{ today_total: number, weekly_total: number }> {
+        const userId = localStorage.getItem('userId') || 'test_user';
+        const url = `/api/exercise-records/summary?user_id=${userId}`;
+        try {
+            const res = await fetch(url);
+            if (res.ok) return await res.json();
+        } catch (err) { console.error("Summary fetch error:", err); }
+        return { today_total: 0, weekly_total: 0 };
+    },
+
+    // 全履歴の取得
+    async getAllRecords(): Promise<ExerciseRecord[]> {
+        const userId = localStorage.getItem('userId') || 'test_user';
+        const url = `/api/exercise-records?user_id=${userId}`;
+        try {
+            const res = await fetch(url);
+            if (res.ok) {
+                const data: { records: ExerciseRecord[] } = await res.json();
+                return data.records;
+            }
+        } catch (err) { console.error("History list fetch error:", err); }
+        return [];
     }
 };

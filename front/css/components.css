@@ -3,11 +3,11 @@
  */
 
 .unified-circle {
-  width: 320px;
-  height: 320px;
+  width: clamp(280px, 85vw, 360px);
+  height: clamp(280px, 85vw, 360px);
   border-radius: var(--radius-circle);
   background-color: white;
-  border: 6px solid var(--primary);
+  border: 8px solid var(--primary);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,7 +17,7 @@
   position: relative;
   text-align: center;
   user-select: none;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.1);
 }
 
 .unified-circle.is-paused {
@@ -27,8 +27,8 @@
 
 .circle-kcal-value {
   font-family: 'Roboto Mono', monospace;
-  font-size: 3.5rem;
-  font-weight: 700;
+  font-size: clamp(3rem, 15vw, 5rem);
+  font-weight: 800;
   color: var(--text-dark);
   line-height: 1;
   margin: 10px 0;
@@ -36,7 +36,7 @@
 
 .circle-unit { font-size: 1rem; font-weight: 600; color: var(--text-main); }
 .circle-action-label {
-  margin-top: 1rem; font-size: 0.8rem; font-weight: 800; color: #94a3b8;
+  margin-top: 1rem; font-size: 0.85rem; font-weight: 800; color: #94a3b8;
   text-transform: uppercase; letter-spacing: 0.1em;
 }
 

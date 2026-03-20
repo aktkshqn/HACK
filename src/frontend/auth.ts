@@ -35,6 +35,10 @@ export const Auth = {
         window.location.href = '/login.html';
     },
 
+    isLoggedIn(): boolean {
+        return localStorage.getItem('isLoggedIn') === 'true';
+    },
+
     // ログインガード
     checkGuard(): void {
         const path = window.location.pathname;

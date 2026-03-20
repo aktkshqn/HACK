@@ -4,7 +4,7 @@ import { getGeminiModel } from '../utils/gemini'
 
 const gemini = new Hono<{ Bindings: Env }>()
 
-// チャットボット呼び出し
+// チャットボット・応援・賞賛・ご褒美提案エンドポイント (JSON形式)
 gemini.post('/chat', async (c) => {
   if (!c.env.API_KEY) return c.json({ error: 'API_KEY is not set' }, 500)
   const { message } = await c.req.json().catch(() => ({}))
@@ -12,9 +12,37 @@ gemini.post('/chat', async (c) => {
 
   try {
     const model = getGeminiModel(c.env.API_KEY)
-    const result = await model.generateContent(message)
-    return c.json({ response: (await result.response).text() })
+    
+    // 構造化データのためのシステム命令
+    const systemPrompt = `
+      あなたは運動を全力でサポートするAIトレーナーです。
+      以下の JSON 構造で返答してください：
+      {
+        "message": "ユーザーへの力強い賞賛や励まし（1行）",
+        "items": [
+          {
+            "name": "おすすめの商品名",
+            "info": "短いカロリー情報や理由",
+            "link": "https://www.google.com/search?q=コンビニ+近く+商品名"
+          }
+        ]
+      }
+      商品は最大3つ提案してください。
+    `;
+
+    const result = await model.generateContent({
+      contents: [{ role: 'user', parts: [{ text: systemPrompt + "\n\nユーザー状況: " + message }] }],
+      generationConfig: {
+        responseMimeType: "application/json",
+      }
+    })
+
+    const responseText = (await result.response).text()
+    const jsonData = JSON.parse(responseText)
+
+    return c.json(jsonData)
   } catch (error) {
+    console.error("Gemini Error:", error)
     return c.json({ error: 'Gemini API Error', details: String(error) }, 500)
   }
 })

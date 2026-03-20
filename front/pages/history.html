@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitSweets</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="history-page">
+    <div class="container" style="justify-content: flex-start;">
+        <header class="app-header">
+            <a href="startmenu.html" class="nav-link">← BACK</a>
+            <span style="font-weight: 800; font-size: 1.2rem;">LOGS</span>
+            <div style="width: 60px;"></div> <!-- Spacer -->
+        </header>
+
+        <main style="width: 100%; padding: 1.5rem;">
+            <div style="margin-bottom: 2.5rem;">
+                <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem;">TODAY'S WORK</h2>
+                <div class="history-summary">
+                    <div class="summary-card">
+                        <span class="summary-value" id="today-total">0.0</span>
+                        <span class="summary-label">TODAY (kcal)</span>
+                    </div>
+                    <div class="summary-card" style="border-color: var(--primary);">
+                        <span class="summary-value" id="weekly-total">0.0</span>
+                        <span class="summary-label">WEEKLY (kcal)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="status-card-timer" style="background-color: var(--info); padding: 1.5rem; border-radius: 24px; border: none; margin-bottom: 2rem;">
+                <h3 style="font-size: 1rem; color: #0369a1; margin-bottom: 0.5rem; font-weight: 800;">MESSAGE FOR YOU</h3>
+                <p id="praise-message" style="font-weight: 600; line-height: 1.5; color: #1e293b; font-size: 0.95rem;">
+                    読み込み中... 🏃‍♂️
+                </p>
+            </div>
+
+            <div style="margin-top: 1rem;">
+                <h3 style="font-size: 1rem; color: #64748b; margin-bottom: 1.2rem; font-weight: 800;">RECENT SESSIONS</h3>
+                <div id="history-list" style="display: flex; flex-direction: column; gap: 0.8rem;">
+                    <!-- 履歴がここにJavaScriptで追加される -->
+                    <p style="text-align: center; color: #94a3b8; font-size: 0.8rem;">記録を探しています...</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 3rem; text-align: center;">
+                <a href="startmenu.html" id="restartBtn" class="unified-circle" style="width: 140px; height: 140px; border-width: 8px; margin: 0 auto; text-decoration: none;">
+                    <div class="circle-unit" style="font-size: 1rem;">GO!</div>
+                    <div class="circle-kcal-value" style="font-size: 1.2rem;">START</div>
+                </a>
+                <p style="margin-top: 1rem; font-weight: 700; color: #94a3b8;">LET'S KEEP IT UP!</p>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="/js/app.js"></script>
+</body>
+</html>

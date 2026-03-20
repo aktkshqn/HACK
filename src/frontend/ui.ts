@@ -29,7 +29,7 @@ export const UI = {
             });
             if (res.ok) {
                 const data: CheerResponse = await res.json();
-                container.textContent = data.response;
+                container.textContent = data.message || "AIがあなたの運動を見守っています...";
             }
         } catch (err) { console.warn("Ai cheer failed", err); }
     },

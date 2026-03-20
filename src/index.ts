@@ -21,6 +21,7 @@ app.route('/api/dev', dev)
 
 // 互換性・エイリアスのためのルート (以前の /ai など)
 app.get('/api/ai', (c) => c.redirect('/api/gemini/test'))
+
 app.get('/api/migrate', (c) => c.redirect('/api/dev/migrate'))
 
 // --- 静的ファイルとルーティング ---

@@ -22,27 +22,158 @@ body {
   font-family: 'Outfit', sans-serif;
   background-color: var(--bg-color);
   color: var(--text-main);
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-x: hidden;
+  transition: background-color 0.3s;
+}
+
+/* PC版（全画面デスクトップモード）のスタイル */
+body.is-desktop-mode {
+  background-image: url('/img/jogging.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  align-items: stretch;
+  position: relative;
+}
+
+/* 背景を暗くするフィルター（オーバーレイ） */
+body.is-desktop-mode::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 0;
+}
+
+body.is-desktop-mode .container {
+  max-width: 1000px; /* PCでは少し広めに */
+  margin: 0 auto;
+  height: 100dvh;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  background-color: rgba(255, 255, 255, 0.9); /* コンテンツ背景を少し透過 */
+  z-index: 1;
+}
+
+.app-header {
+  width: 100%;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eef2f6;
+  background: white;
+}
+
+.desktop-nav {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.mobile-only { display: none; }
+
+@media (max-width: 899px) {
+  .desktop-nav { display: none; }
+  .mobile-only { display: flex; }
+}
+
+.nav-link {
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: #64748b;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.nav-link:hover { color: var(--primary); transform: translateY(-1px); }
+.nav-link.active { color: var(--primary); }
+
+.login-page {
+  background-image: url('/img/run.jpg') !important; /* Login screen uses distinct background */
 }
 
 .container {
   width: 100%;
-  max-width: 420px;
-  padding: 2rem;
+  height: 100dvh;
+  max-width: 480px;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: white;
+  position: relative;
+  overflow-y: auto;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@media (min-width: 600px) {
-  body { background-color: #f8fafc; }
-  .container {
-    background-color: white;
-    box-shadow: 0 4px 60px -12px rgba(0, 0, 0, 0.08);
-    height: 800px;
-    border-radius: 40px;
+@media (min-width: 900px) {
+  /* デフォルトはスマホシミュレーター（枠付き） */
+  body:not(.is-desktop-mode) {
+    background-color: #cbd5e1;
+    padding: 2rem;
   }
+  body:not(.is-desktop-mode) .container {
+    height: min(850px, 90dvh);
+    border-radius: 48px;
+    box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.2);
+    border: 12px solid #0f172a;
+  }
+}
+
+/* --- App Layout Elements --- */
+.app-header {
+  width: 100%;
+  padding: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.nav-link {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  background-color: #f1f5f9;
+  color: #64748b;
+  padding: 0.6rem 1rem;
+  border-radius: 14px;
+  transition: opacity 0.2s;
+}
+
+.nav-link:hover { opacity: 0.8; }
+
+.history-summary {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.summary-card {
+  flex: 1;
+  background-color: #fff;
+  padding: 1.5rem 1rem;
+  border-radius: 24px;
+  border: 4px solid var(--info);
+  text-align: center;
+}
+
+.summary-value {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.summary-label {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 600;
 }

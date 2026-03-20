@@ -3,20 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>計測中</title>
+    <title>FitSweets</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="mini-timer">00:00</div>
-        <div id="stopBtn" class="unified-circle">
-            <div class="circle-unit">BURNED</div>
-            <div class="circle-kcal-value" id="current-kcal-value">0.0</div>
-            <div class="circle-unit">KCAL</div>
-            <div class="circle-action-label" id="action-label">TAP TO PAUSE</div>
+    <div class="container" style="justify-content: flex-start;">
+        <header class="app-header">
+            <div style="width: 60px;"></div> <!-- Spacer -->
+            <span style="font-weight: 800; font-size: 1.2rem;">WORKOUT</span>
+            <a href="history.html" class="nav-link">LOGS</a>
+        </header>
+
+        <div style="margin-top: 4rem; text-align: center;">
+            <div class="mini-timer" style="font-size: 2.2rem; margin-bottom: 2rem;">00:00</div>
+            
+            <div id="stopBtn" class="unified-circle" style="margin: 0 auto;">
+                <div class="circle-unit">BURNED</div>
+                <div class="circle-kcal-value" id="current-kcal-value">0.0</div>
+                <div class="circle-unit">KCAL</div>
+                <div class="circle-action-label" id="action-label">Tap to Pause</div>
+            </div>
+
+            <div id="ai-cheer" style="margin-top: 4rem; font-weight: 700; color: #64748b; line-height: 1.6;">
+                運動を始めましょう！🏃‍♂️
+            </div>
         </div>
-        <div id="ai-cheer">AIがあなたの運動を見守っています...</div>
-        <button class="btn-end-link" id="endBtn">HOLD OR TAP HERE TO FINISH</button>
     </div>
     <script type="module" src="/js/app.js"></script>
 </body>

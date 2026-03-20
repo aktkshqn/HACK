@@ -3,11 +3,14 @@
  */
 
 export interface ExerciseRecord {
+    id?: number;
     user_id: string;
     activity_type: string;
     start_time: string;
     end_time: string;
-    calories: number;
+    calories_burned: number;
+    notes?: string;
+    created_at?: number;
 }
 
 export interface AuthResponse {
@@ -16,5 +19,10 @@ export interface AuthResponse {
 }
 
 export interface CheerResponse {
-    response: string;
+    message: string;
+    items?: Array<{
+        name: string;
+        info: string;
+        link: string;
+    }>;
 }
